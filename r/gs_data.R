@@ -45,18 +45,22 @@ s18_record <- gs_title("UF R Meetup Sign-In (Responses)") %>%
   gs_read(ws = 1) %>% 
   janitor::clean_names() %>% 
   mutate(timestamp = lubridate::mdy_hms(timestamp)) %>% 
-  mutate(date = as_date(timestamp)) %>% 
+  mutate(date = as_date(timestamp),
+         department = abbreviate(department)) %>% 
   select(date, position, department)
 
 plotDep <- ggplot(s18_record, aes(x = department, fill = department)) +
-  geom_bar(aes(label = department)) +
+  geom_bar() +
   #geom_text()
   coord_polar() +
   theme_minimal() +
+  #margin(t = 0, r = 0, b = 0, l = 0, unit = "pt") +
   theme(legend.position = "none", 
         axis.line=element_blank(),
+        plot.margin = margin(0,0,0,0, "cm"),
         #axis.text.x=element_blank(),
         #axis.text.y=element_blank(),
         axis.title.x=element_blank(),
         axis.title.y=element_blank())
+plotDep
 ggsave("img/s18-department.png", plotDep)
