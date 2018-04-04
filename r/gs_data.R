@@ -32,6 +32,7 @@ plotAttend <- ggplot(df, aes(x = wk, y = num, color = sm)) +
   theme_classic() +
   theme(legend.position = "top")
 
+plotAttend
 ggsave("img/attendance.png", plotAttend)
 
 # Unique Presenters
@@ -50,6 +51,7 @@ s18_record <- gs_title("UF R Meetup Sign-In (Responses)") %>%
   mutate(timestamp = lubridate::mdy_hms(timestamp)) %>% 
   mutate(date = as_date(timestamp)) %>% 
   select(date, position, department) %>% 
+  filter(department != "zCount") %>% 
   rbind(first_week)
 
 # Departmental attendance
@@ -84,8 +86,8 @@ s18_pos <- s18_record %>%
 
 plotPos <- ggplot(s18_pos, aes(x = position, y = freq, fill = position)) +
   geom_col() + 
-  scale_y_continuous(labels = percent) +
-  xlab("") + ylab("Attendance") + 
+  scale_y_continuous() +
+  xlab("") + ylab("% of Attendance") + 
   ggtitle("Spring 2018 Attendance by Position") +
   theme_classic() +
   theme(legend.position = "none", 
