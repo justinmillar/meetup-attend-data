@@ -93,4 +93,4 @@ plotPos <- ggplot(s18_pos, aes(x = position, y = freq, fill = position)) +
   theme(legend.position = "none", 
         axis.text.x = element_text(angle = 30, hjust = 1))
 plotPos
-ggsave("img/s18-position.png", plotPos)
+ggsave("img/s18-position.png", plotPos) 
